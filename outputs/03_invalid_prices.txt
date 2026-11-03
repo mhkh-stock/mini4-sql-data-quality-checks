@@ -1,0 +1,2 @@
+4 | SKU-104 | Broken Kettle | -500
+5 | SKU-105 | Free Notebook | 0
