@@ -13,7 +13,7 @@ that finds nothing on dirty data is worse than no check at all.
 ## Demo dataset
 
 Small on purpose: 6 customers · 6 products · 6 orders · 9 order lines.
-11 planted defects across 10 checks (query 10 covers two related issues).
+13 planted defects across 10 checks (query 10 covers two related issues).
 Schema: `data/schema.sql` · Seed: `data/seed.sql` (defects marked
 `DEFECT`) · Dictionary: `data/README.md` · Built database:
 `data/demo.db` (rebuild any time with `python3 run_queries.py`, which
@@ -28,7 +28,7 @@ also verifies every query).
    `sqlite3 -header -column data/demo.db < sql/01_duplicate_emails.sql`
 
 Requires Python 3 + SQLite (standard library only). Verified on
-SQLite 3.45.1.
+Python 3.12.3 + SQLite 3.45.1.
 
 ## Queries
 
@@ -49,10 +49,27 @@ SQLite 3.45.1.
 
 - All 10 files execute against `data/demo.db` with no errors.
 - Every query returns exactly its planted defect count (1, 1, 2, 1, 1,
-  1, 2, 1, 1, 2) — 11 defects total, none missed, none double-counted
+  1, 2, 1, 1, 2) — 13 defects total, none missed, none double-counted
   across checks (query 08 deliberately excludes query 06's orphan line).
 - Verified outputs are saved in `outputs/` (one `.txt` per query);
   `run_queries.py` re-asserts all of the above on every run.
+
+## Limits
+
+- SAMPLE / DEMO data only — fictional shop, Jan–May 2026 plus one
+  future-dated order; SQLite only, standard library only.
+- The checks detect defects; they do not fix them. `data/demo.db` is
+  left dirty on purpose so every check keeps finding its defects.
+- Query 09's cutoff (`'2026-06-30'`) is a hard-coded parameter in the
+  SQL — change it when the dataset grows.
+- Prices and quantities are whole PKR / whole units (INTEGER); no
+  decimals, tax, or currency handling.
+- The schema declares foreign keys, but SQLite does not enforce them
+  unless `PRAGMA foreign_keys = ON` — the runner does not set it,
+  which is exactly how the orphan rows in the seed can exist.
+- Line 8 appears in two checks (08 and 10) because it carries two
+  different defects — a wrong total and a duplicate order+product
+  pair — not because one defect is counted twice.
 
 ## Note for the publisher
 
