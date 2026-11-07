@@ -1,5 +1,7 @@
 # Mini #4 — SQL Data Quality Checks Pack
 
+**Repo:** https://github.com/mhkh-stock/mini4-sql-data-quality-checks
+
 **SAMPLE / DEMO data only.** Fictional shop, fictional people, fictional
 orders. Never claimed as real client or real business data.
 
@@ -71,8 +73,10 @@ Python 3.12.3 + SQLite 3.45.1.
   different defects — a wrong total and a duplicate order+product
   pair — not because one defect is counted twice.
 
-## Note for the publisher
+## Published
 
-No GitHub repo was created and nothing was pushed, per the task —
-the GitHub App cannot create repos, so this mini stays built
-locally, verified and ready until its repo exists.
+Live on GitHub: https://github.com/mhkh-stock/mini4-sql-data-quality-checks
+(published 3 Nov 2026, 25 files live). The built `data/demo.db` is
+intentionally not uploaded — it is left dirty on purpose locally so
+every check keeps finding its defects; rebuild it any time with
+`python3 run_queries.py`.
